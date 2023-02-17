@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% set active_page = "create" %}
+
+{% block content %}
+    <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>{% block title %}Create Test{% endblock %}</h2>
+                  <small>Create new test for patient & generate report</small>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages and error %}
+                    {% for msg in messages %}
+                      <div class="alert alert-danger" >{{msg}}</div>
+                    {% endfor %}
+                {% elif messages and uploaded %}
+                    {% for msg in messages %}
+                        <div class="alert alert-success" >{{msg}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+          <!-- ========== form-elements-wrapper start ========== -->
+          <div class="form-elements-wrapper">
+            <form class="form-group needs-validation" id="createForm" method="post" action="/test/operation" enctype="multipart/form-data">
+                <div class="row mb-30">
+                    <div class="col-lg-6 mb-30">
+                        <!-- input style start -->
+                        <div class="card-style">
+                          <h6 class="mb-25">Patient Details</h6>
+                          <div class="input-style-3">
+                            <input type="text" name="patient_name" placeholder="Full Name" required />
+                            <span class="icon"><i class="lni lni-user"></i></span>
+                          </div>
+
+                          <div class="input-style-3">
+                            <input type="number" name="patient_age" placeholder="Age" required />
+                            <span class="icon"><i class="lni lni-calendar"></i></span>
+                          </div>
+
+                          <div class="input-style-3">
+                            <input type="text" name="patient_phone" placeholder="Phone Number" required />
+                            <span class="icon"><i class="lni lni-phone"></i></span>
+                          </div>
+
+                          <div class="form-check form-check-inline radio-style mb-20">
+                              <input class="form-check-input" type="radio" value="0" name="patient_gender" id="radio-male" required />
+                              <label class="form-check-label" for="radio-male"> Male</label>
+                            </div>
+
+                            <div class="form-check form-check-inline radio-style mb-20">
+                              <input class="form-check-input" type="radio" value="1" name="patient_gender" id="radio-female" required />
+                              <label class="form-check-label" for="radio-female"> Female</label>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- ======= input style end ======= -->
+                    </div>
+                    <!-- end col -->
+
+                    <div class="col-lg-6 mb-30">
+                        <!-- input style start -->
+                        <div class="card-style h-100">
+                            <h6 class="mb-25">Test Details</h6>
+                            <div class="input-style-3">
+                                <input type="text" name="name" value="Covid-19 and Pneumonia Test" required />
+                                <span class="icon"><i class="lni lni-highlight-alt"></i></span>
+                            </div>
+
+
+                            <div>
+                                <input type="file" id="file-input" name="pic" accept="image/png, image/jpeg" onchange="preview()" multiple>
+                                <label for="file-input" class="bg-block">
+                                    <i class="lni lni-upload"></i> &nbsp; Choose Photos
+                                </label>
+                                <p id="num-of-files">No Files Chosen</p>
+                                <div id="images"></div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- ======= input style end ======= -->
+                    </div>
+                    <!-- end col -->
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card-style mb-30">
+                      <h6 class="mb-25">Notes</h6>
+                      <div class="input-style-3">
+                        <textarea placeholder="Notes" name="note" rows="5"></textarea>
+                        <span class="icon"><i class="lni lni-text-format"></i></span>
+                      </div>
+                      <!-- end textarea -->
+
+                        <div class="text-right clearfix">
+                            <input type="submit" class="main-btn active-btn rounded-md btn-hover float-end" name="start_test" value="Start Testing">
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+            </form>
+            <!-- end row -->
+          </div>
+          <!-- ========== form-elements-wrapper end ========== -->
+        </div>
+    <!-- end container -->
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function(){
+          $("#createForm").on("submit", function(e){
+            $("#loader").fadeIn();
+          });
+        });
+    </script>
+{% endblock %}

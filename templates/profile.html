@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% set active_page = "profile" %}
+
+{% block content %}
+    <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>{% block title %}Profile{% endblock %}</h2>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages and error %}
+                    {% for msg in messages %}
+                      <div class="alert alert-danger" >{{msg}}</div>
+                    {% endfor %}
+                {% elif messages and uploaded %}
+                    {% for msg in messages %}
+                        <div class="alert alert-success" >{{msg}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+          <!-- ========== form-elements-wrapper start ========== -->
+          <div class="form-elements-wrapper">
+            <form class="form-group needs-validation" method="post" action="/auth/user/update">
+                <div class="row mb-30">
+                    <div class="col-lg-12 mb-30">
+                        <!-- input style start -->
+                        <div class="card-style">
+                          <h6 class="mb-25">Profile Details</h6>
+
+                          <div class="input-style-3">
+                            <input type="text" name="name" id="name" value="{{user.name}}" required>
+                            <span class="icon"><i class="lni lni-user"></i></span>
+                          </div>
+
+                          <div class="input-style-3">
+                            <input type="text" name="phone" id="phone" value="{{user.phone}}" required>
+                            <span class="icon"><i class="lni lni-phone"></i></span>
+                          </div>
+
+                          <div class="input-style-3">
+                            <input type="text" name="email" id="email" value="{{user.email}}" required>
+                            <span class="icon"><i class="lni lni-envelope"></i></span>
+                          </div>
+
+<!--                            <input type="text" name="password" id="password" required>-->
+
+                            <div class="text-right clearfix">
+                                <input type="submit" class="main-btn active-btn rounded-md btn-hover float-end" name="update" value="Update">
+                            </div>
+
+                        </div>
+                        <!-- end card -->
+                        <!-- ======= input style end ======= -->
+                    </div>
+                    <!-- end col -->
+                </div>
+
+            </form>
+            <!-- end row -->
+          </div>
+          <!-- ========== form-elements-wrapper end ========== -->
+        </div>
+    <!-- end container -->
+{% endblock %}

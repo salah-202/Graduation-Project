@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+    <h1>{% block title %}Login{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" action="/auth/login/perform">
+        <div class="txt_field">
+          <input type="text" name="email" id="email" required>
+          <span></span>
+          <label>Email </label>
+        </div>
+
+        <div class="txt_field" >
+          <input type="password" name="password" id="password" required>
+          <span></span>
+          <label>Password</label>
+        </div>
+
+        <div class="pass" ><a href="#">Forgot Password?</a></div>
+
+          {% with messages = get_flashed_messages() %}
+              {% if messages and LoginFailure %}
+                  {% for msg in messages %}
+                    <div class="wornmessage" >{{msg}}</div>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+
+        <input type="submit" value="Login" name="Login_button" id="Login_button" >
+
+        <div class="signup_link" >Don't have account ? <a href="{{ url_for('signup') }}">Signup</a></div>
+
+      </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+    <h1>{% block title %}Code Verification{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form class="pb-5" method="POST" action="/auth/password/verify_code">
+        <div class="txt_field">
+            <input type="text" name="verification_code" id="verification_code" required>
+            <span></span>
+            <label>Verification Code</label>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages and Verificationerror %}
+                {% for msg in messages %}
+                <div class="wornmessage" >{{msg}}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <input type="submit" value="Confirm Verification Code" name="confirm_verification_code" >
+
+    </form>
+{% endblock %}

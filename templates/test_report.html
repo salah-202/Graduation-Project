@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1" />
+        <meta name="author" content="FCIH" />
+        <meta name="description" content="WBC Classification & Counter" />
+        <meta name="keywords" content="WBC, White, Blood, Cell, Classification, Counter" />
+        <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo/logo_white.png', _external=True) }}" type="image/x-icon" />
+        <title>Report - WBC</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css', _external=True) }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css', _external=True) }}">
+    </head>
+    <body>
+
+    <!-- ======== main-wrapper start =========== -->
+        <main class="main-wrapper">
+            <!-- ========== section start ========== -->
+            <section class="section">
+                <div class="container-fluid">
+                    <!-- ========== test-wrapper start ========== -->
+                    <div class="test-wrapper pt-30">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-30">
+                                    <div class="card-header row">
+                                        <div class="col-xs-6">
+                                            <h2 class="mb-10">{{ test.name }}</h2>
+                                            <p class="text-sm">
+                                                White Blood Cell Classification & Counter
+                                            </p>
+                                        </div>
+<!--                                        <div class="invoice-logo col-sm-6">-->
+<!--                                            <img alt="Logo" src="{{ url_for('static',filename='images/logo/logo.png', _external=True) }}"/>-->
+<!--                                        </div>-->
+                                        <div class="col-xs-6">
+                                            <p><span>Date Issued:</span> {{ test.date_created.strftime("%d/%m/%Y") }}</p>
+                                            <p><span>Time Issued:</span> {{ test.date_created.strftime("%I:%M:%S %p") }}</p>
+                                            <p><span>Test ID:</span> #{{ test.id }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="invoice-address">
+                                        <div class="address-item mb-3">
+                                            <h5 class="text-bold">Doctor</h5>
+                                            <h1>{{ test.user.name }}</h1>
+                                        </div>
+                                        <div class="address-item mb-3">
+                                            <h5 class="text-bold">Patient</h5>
+                                            <h1>{{ test.patient_name }}</h1>
+                                            <p class="text-sm">
+                                                Sex: {{ 'Female' if test.patient_gender else 'Male' }}, Age: {{ test.patient_age }}
+                                            </p>
+                                            <p class="text-sm">
+                                                <span class="text-medium">phone:</span>
+                                                {{ test.patient_phone }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                        <div class="table-responsive">
+                 
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4>Possible Diseases</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>{{ test.result | safe }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {% if test.note %}
+                                        <div class="note-wrapper warning-alert py-4 px-sm-3 px-lg-5">
+                                            <div class="alert">
+                                                <h5 class="text-bold mb-15">Notes:</h5>
+                                                <p class="text-sm text-gray">
+                                                    {{ test.note }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- ENd Col -->
+                        </div>
+                        <!-- End Row -->
+                    </div>
+                    <!-- ========== test-wrapper end ========== -->
+                </div>
+                <!-- end container -->
+            </section>
+            <!-- ========== section end ========== -->
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js', _external=True) }}"></script>
+        <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js', _external=True) }}"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

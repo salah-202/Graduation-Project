@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1" />
+        <meta name="author" content="FCIH" />
+        <meta name="description" content="WBC Classification & Counter" />
+        <meta name="keywords" content="WBC, White, Blood, Cell, Classification, Counter" />
+        <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo/logo_white.png') }}" type="image/x-icon" />
+        <title>{% block title %}{% endblock %} - CPD</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/lineicons.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/materialdesignicons.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/fullcalendar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+    </head>
+    <body>
+        <!-- ======== loader start =========== -->
+        <div id="loader">
+            <i class="fa fa-spinner fa-spin spin-big" aria-hidden="true"></i>
+        </div>
+        <!-- ======== loader end =========== -->
+
+        <!-- ======== sidebar-nav start =========== -->
+        <aside class="sidebar-nav-wrapper">
+            {% include 'menu.html' %}
+        </aside>
+        <!-- ======== sidebar-nav end =========== -->
+
+        <div class="overlay"></div>
+
+        <!-- ======== main-wrapper start =========== -->
+        <main class="main-wrapper">
+            <!-- ========== header start ========== -->
+            <header class="header">
+                {% include 'top_area.html' %}
+            </header>
+            <!-- ========== header end ========== -->
+
+            <!-- ========== section start ========== -->
+            <section class="section">
+                {% block content %}{% endblock %}
+            </section>
+            <!-- ========== section end ========== -->
+
+            <!-- ========== footer start =========== -->
+            <footer class="footer">
+                {% include 'footer.html' %}
+            </footer>
+            <!-- ========== footer end =========== -->
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js') }}"></script>
+        <script src="https://kit.fontawesome.com/47192b092f.js" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static',filename='js/Chart.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/dynamic-pie-chart.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/dropzone.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/fullcalendar.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/jvectormap.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/world-merc.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/polyfill.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/script.js') }}"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

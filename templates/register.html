@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+    <a href="{{ url_for('signin') }}">
+        <li class="prev"><span></span>
+        </li>
+    </a>
+    <h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+      <form class="pb-5" method="post" action="/auth/register/perform">
+        <div class="txt_field">
+          <input type="text" name="username" id="username" required>
+          <label>Username</label>
+        </div>
+
+        <div class="txt_field">
+          <input type="text" name="phone" id="phone"  required>
+          <label>Phone</label>
+        </div>
+
+        <div class="txt_field">
+          <input type="text" name="email" id="email" required>
+          <label>Email</label>
+        </div>
+
+        <div class="txt_field">
+          <input type="password" name="password" id="password" required>
+          <span></span>
+          <label>Password</label>
+        </div>
+        <style>
+          .radio_field {
+            display: flex;
+            gap: 4rem;
+            padding: 10px;
+          }
+        </style>
+        <div class="radio_field" style>
+          <div>
+            <label>Doctor </label>
+            <input type="radio" name="selection" id="Doctor" value="Doctor" required>
+          </div>
+          <div>
+            <label>Patient </label>
+            <input type="radio" name="selection" id="Patient"  value="Patient" required>
+          </div>
+          <span></span>
+          
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+              {% if messages and SignupFailure %}
+                  {% for msg in messages %}
+                    <div class="wornmessage" >{{msg}}</div>
+                  {% endfor %}
+              {% endif %}
+        {% endwith %}
+
+        <input type="submit" name="signup" value="Sign up">
+
+      </form>
+{% endblock %}

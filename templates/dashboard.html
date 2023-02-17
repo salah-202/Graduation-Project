@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+
+{% set active_page = "dashboard" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row pt-30">
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon purple">
+              <i class="lni lni-archive"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">Total Tests</h6>
+              <h3 class="text-bold mb-10">{{ total_tests }}</h3>
+
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon success">
+              <i class="lni lni-control-panel"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">My Tests</h6>
+              <h3 class="text-bold mb-10">{{ tests | length }}</h3>
+
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon primary">
+              <i class="lni lni-graph"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">Monthly Tests</h6>
+              <h3 class="text-bold mb-10">{{ monthly_tests | length }}</h3>
+
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon orange">
+              <i class="lni lni-calendar"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">Today's Tests</h6>
+              <h3 class="text-bold mb-10">{{ today_tests | length }}</h3>
+
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+
+      
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+  // =========== chart three start
+  const ctx1 = document.getElementById("Chart1").getContext("2d");
+  const chart1 = new Chart(ctx1, {
+    // The type of chart we want to create
+    type: "line", // also try bar or other graph types
+
+    // The data for our dataset
+    data: {
+      labels: {{ chart_labels_user | safe }},
+      // Information about the dataset
+      datasets: [
+        {
+          label: "Your Tests",
+          backgroundColor: "transparent",
+          borderColor: "#4a6cf7",
+          data: {{ chart_data_user | safe }},
+          pointBackgroundColor: "transparent",
+          pointHoverBackgroundColor: "#4a6cf7",
+          pointBorderColor: "transparent",
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 3,
+          pointBorderWidth: 5,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+        },
+        {
+          label: "Other Tests",
+          backgroundColor: "transparent",
+          borderColor: "#d50100",
+          data: {{ chart_data_total | safe }},
+          pointBackgroundColor: "transparent",
+          pointHoverBackgroundColor: "#d50100",
+          pointBorderColor: "transparent",
+          pointHoverBorderColor: "#fff",
+          pointHoverBorderWidth: 3,
+          pointBorderWidth: 5,
+          pointRadius: 5,
+          pointHoverRadius: 8,
+        },
+      ],
+    },
+
+    // Configuration options
+    options: {
+      tooltips: {
+        intersect: false,
+        backgroundColor: "#fbfbfb",
+        titleFontColor: "#8F92A1",
+        titleFontSize: 16,
+        titleFontFamily: "Inter",
+        titleFontStyle: "400",
+        bodyFontFamily: "Inter",
+        bodyFontColor: "#171717",
+        bodyFontSize: 16,
+        multiKeyBackground: "transparent",
+        displayColors: false,
+        xPadding: 30,
+        yPadding: 15,
+        borderColor: "rgba(143, 146, 161, .1)",
+        borderWidth: 1,
+        title: false,
+      },
+
+      title: {
+        display: false,
+      },
+
+      layout: {
+        padding: {
+          top: 0,
+        },
+      },
+
+      legend: false,
+
+      scales: {
+        yAxes: [
+          {
+            gridLines: {
+              display: false,
+              drawTicks: false,
+              drawBorder: false,
+            },
+            ticks: {
+              padding: 35,
+              max: 100,
+              min: 0,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            gridLines: {
+              drawBorder: false,
+              color: "rgba(143, 146, 161, .1)",
+              zeroLineColor: "rgba(143, 146, 161, .1)",
+            },
+            ticks: {
+              padding: 20,
+            },
+          },
+        ],
+      },
+    },
+  });
+  // =========== chart three end
+
+  // ================== chart four start
+  const ctx2 = document.getElementById("Chart2").getContext("2d");
+  const chart2 = new Chart(ctx2, {
+    // The type of chart we want to create
+    type: "bar", // also try bar or other graph types
+    // The data for our dataset
+    data: {
+      labels: {{ chart_labels_user | safe }},
+      // Information about the dataset
+      datasets: [
+        {
+          label: "",
+          backgroundColor: "#4A6CF7",
+          barThickness: "flex",
+          maxBarThickness: 8,
+          data: {{ chart_data_user | safe }},
+        },
+        {
+          label: "",
+          backgroundColor: "#d50100",
+          barThickness: "flex",
+          maxBarThickness: 8,
+          data: {{ chart_data_total | safe }},
+        },
+      ],
+    },
+    // Configuration options
+    options: {
+      borderColor: "#F3F6F8",
+      borderWidth: 15,
+      backgroundColor: "#F3F6F8",
+      tooltips: {
+        callbacks: {
+          labelColor: function (tooltipItem, chart) {
+            return {
+              backgroundColor: "rgba(104, 110, 255, .0)",
+            };
+          },
+        },
+        backgroundColor: "#F3F6F8",
+        titleFontColor: "#8F92A1",
+        titleFontSize: 12,
+        bodyFontColor: "#171717",
+        bodyFontStyle: "bold",
+        bodyFontSize: 16,
+        multiKeyBackground: "transparent",
+        displayColors: false,
+        xPadding: 30,
+        yPadding: 10,
+        bodyAlign: "center",
+        titleAlign: "center",
+      },
+
+      title: {
+        display: false,
+      },
+      legend: {
+        display: false,
+      },
+
+      scales: {
+        yAxes: [
+          {
+            gridLines: {
+              display: false,
+              drawTicks: false,
+              drawBorder: false,
+            },
+            ticks: {
+              padding: 35,
+              max: 100,
+              min: 0,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
+              drawBorder: false,
+              color: "rgba(143, 146, 161, .1)",
+              zeroLineColor: "rgba(143, 146, 161, .1)",
+            },
+            ticks: {
+              padding: 20,
+            },
+          },
+        ],
+      },
+    },
+  });
+  // =========== chart four end
+</script>
+{% endblock %}

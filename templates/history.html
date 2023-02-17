@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% set active_page = "history" %}
+
+{% block content %}
+    <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title mb-30">
+                  <h2>{% block title %}Tests History{% endblock %}</h2>
+                  <small>List of all tests you created, you can view/delete or print test</small>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages and error %}
+                    {% for msg in messages %}
+                      <div class="alert alert-danger" >{{msg}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+
+          {% if tests|length == 0 %}
+          <div class="card-style mb-30">
+            <p>No tests yet, Create tests to show here</p>
+          </div>
+          {% else %}
+          <!-- ========== form-elements-wrapper start ========== -->
+          <div class="tables-wrapper">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card-style mb-30">
+                  <div class="table-wrapper table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col" style="width: 8.33%"><h6>#</h6></th>
+                          <th scope="col" style="width: 16.66%"><h6>Name</h6></th>
+                          <th scope="col" style="width: 16.66%"><h6>Gender</h6></th>
+                          <th scope="col" style="width: 16.66%"><h6>Age</h6></th>
+                          <th scope="col" style="width: 16.66%"><h6>Phone</h6></th>
+                          <th scope="col" style="width: 8.33%"><h6>Diseases found</h6></th>
+                          <th scope="col" class="text-center" style="width: 16.7%"><h6>Action</h6></th>
+                        </tr>
+                        <!-- end table row-->
+                      </thead>
+                      <tbody>
+                      {% for test in tests %}
+                        <tr>
+                          <th scope="row">
+                            <p>{{test.id}}</p>
+                          </th>
+                          <td>
+                            <p>{{test.patient_name}}</p>
+                          </td>
+                          <td>
+                            <img src="{{url_for('static',filename='images/female.png' if test.patient_gender else 'images/male.png') }}">
+                          </td>
+                          <td>
+                            <p>{{test.patient_age}}</p>
+                          </td>
+                          <td>
+                            <p>{{test.patient_phone}}</p>
+                          </td>
+                          <td>
+                              {% if test.result == 'NORMAL' %}
+                              <span class="badge bg-success">No</span>
+                              {% else %}
+                              <span class="badge bg-danger">Yes</span>
+                              {% endif %}
+                          </td>
+                          <td>
+                            <div class="action justify-content-center">
+                                  <a class="text-primary px-2" href="{{ url_for('view_test',tid=test.id) }}">
+                                    <i class="lni lni-eye"></i>
+                                  </a>
+                                  <a class="text-primary px-2" href="#">
+                                    <i class="lni lni-printer"></i>
+                                  </a>
+                                  <a class="text-danger px-2" href="{{ url_for('delete_test',tid=test.id) }}">
+                                    <i class="lni lni-trash-can"></i>
+                                  </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- end table row -->
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- end table -->
+                  </div>
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== form-elements-wrapper end ========== -->
+          {% endif %}
+        </div>
+    <!-- end container -->
+{% endblock %}
